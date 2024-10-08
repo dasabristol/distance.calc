@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">activity.fare</string>
+
+    <string-array name="destinations">
+        <item>Urdaneta</item>
+        <item>Baguio</item>
+        <item>Alaminos</item>
+        <item>Manila</item>
+        <item>Bolinao</item>
+    </string-array>
+
+    <string-array name="origins">
+        <item>Urdaneta</item>
+        <item>Baguio</item>
+        <item>Manila</item>
+        <item>Alaminos</item>
+        <item>Bolinao</item>
+    </string-array>
+</resources>
