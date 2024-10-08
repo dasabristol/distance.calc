@@ -45,7 +45,7 @@
             android:gravity="center" />
 
         <TextView
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="To" />
@@ -59,7 +59,25 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/Dcnt"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+
+
     <RadioGroup
+        android:layout_marginTop="30dp"
         android:id="@+id/radioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -99,23 +117,69 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/radioGroup2"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/Vehicle"
+            android:textSize="24sp" />
+
+
+    </LinearLayout>
+
+
+    <RadioGroup
+        android:layout_marginTop="30dp"
+        android:id="@+id/radioGroup2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup">
+
+
+        <RadioButton
+            android:id="@+id/rbBus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bus" />
+
+
+        <RadioButton
+            android:id="@+id/rbJeep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Jeep" />
+
+        <RadioButton
+            android:id="@+id/rbModernJeep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Modern Jeep" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup2" >
 
         <Button
             android:id="@+id/btnCalculate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Calculate Fare"
-            android:layout_gravity="center"
-            android:paddingTop="16dp" />
+            android:text="Proceed"/>
 
-        <!-- TextView to display the fare -->
+
         <TextView
             android:id="@+id/tvFare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
+            android:gravity="center"
             android:layout_gravity="center"
             android:paddingTop="16dp" />
     </LinearLayout>

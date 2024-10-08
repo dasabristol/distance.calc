@@ -37,6 +37,13 @@
             android:text="Destination:"
             android:textSize="16sp" />
 
+        <TextView
+            android:id="@+id/tvReceiptTransportMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"/>
+
         <!-- TextView for base fare -->
         <TextView
             android:id="@+id/tvReceiptBaseFare"
@@ -68,8 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Close"
-            android:layout_gravity="center"
-            android:paddingTop="20dp" />
+            android:layout_gravity="center" />
     </LinearLayout>
 
 

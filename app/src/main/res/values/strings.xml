@@ -16,4 +16,7 @@
         <item>Alaminos</item>
         <item>Bolinao</item>
     </string-array>
+    
+    <string name="Dcnt"><b>DISCOUNT</b></string>
+    <string name="Vehicle"><b>LUGAN</b></string>
 </resources>
