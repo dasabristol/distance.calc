@@ -52,6 +52,13 @@
             android:text="Base Fare:"
             android:textSize="16sp" />
 
+        <TextView
+            android:id="@+id/tvReceiptChange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Base Fare:"
+            android:textSize="16sp" />
+
         <!-- TextView for discount -->
         <TextView
             android:id="@+id/tvReceiptDiscount"

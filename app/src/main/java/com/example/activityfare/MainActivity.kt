@@ -1,6 +1,8 @@
 package com.example.activityfare
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.widget.*
 import androidx.activity.enableEdgeToEdge
@@ -16,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var rgDiscount: RadioGroup
     private lateinit var rgTransportMode: RadioGroup
     private lateinit var btnCalculate: Button
+    private lateinit var etUserMoney: EditText // Input for user money
 
     private val fareMap = mapOf(
         "Bus" to mapOf(
@@ -103,6 +106,7 @@ class MainActivity : AppCompatActivity() {
         rgDiscount = findViewById(R.id.radioGroup)
         rgTransportMode = findViewById(R.id.radioGroup2)
         btnCalculate = findViewById(R.id.btnCalculate)
+        etUserMoney = findViewById(R.id.etUserMoney) // Initialize user money input
 
         btnCalculate.isEnabled = false
 
@@ -111,6 +115,17 @@ class MainActivity : AppCompatActivity() {
         btnCalculate.setOnClickListener {
             calculateFare()
         }
+
+        // Add a TextWatcher to monitor changes in the etUserMoney input field
+        etUserMoney.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                validateInputs() // Validate inputs every time the text changes
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
     }
 
     private fun setupSelectionListeners() {
@@ -137,8 +152,10 @@ class MainActivity : AppCompatActivity() {
         val origin = spinnerOrigin.selectedItem.toString()
         val destination = spinnerDestination.selectedItem.toString()
         val selectedTransportId = rgTransportMode.checkedRadioButtonId
+        val moneyInput = etUserMoney.text.toString()
 
-        btnCalculate.isEnabled = (origin != destination && selectedTransportId != -1)
+        // Enable the button only if origin != destination, transport mode is selected, and money is entered
+        btnCalculate.isEnabled = (origin != destination && selectedTransportId != -1 && moneyInput.isNotEmpty())
     }
 
     private fun calculateFare() {
@@ -178,7 +195,19 @@ class MainActivity : AppCompatActivity() {
 
         val discountedFare = baseFare - (baseFare * discount)
 
-        showReceiptDialog(origin, destination, baseFare, discountedFare, discountType, transportMode)
+        // Get the user-entered money
+        val userMoneyStr = etUserMoney.text.toString()
+        if (userMoneyStr.isNotEmpty()) {
+            val userMoney = userMoneyStr.toDouble()
+
+            // Calculate the change
+            if (userMoney >= discountedFare) {
+                val change = userMoney - discountedFare
+                showReceiptDialog(origin, destination, baseFare, discountedFare, discountType, transportMode, change)
+            } else {
+                showReceiptDialog(origin, destination, baseFare, discountedFare, discountType, transportMode, null)
+            }
+        }
     }
 
     private fun showReceiptDialog(
@@ -187,7 +216,8 @@ class MainActivity : AppCompatActivity() {
         baseFare: Double,
         discountedFare: Double,
         discountType: String,
-        transportMode: String
+        transportMode: String,
+        change: Double?
     ) {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_receipt, null)
         val alertDialog = AlertDialog.Builder(this)
@@ -200,6 +230,7 @@ class MainActivity : AppCompatActivity() {
         val tvReceiptDiscount = dialogView.findViewById<TextView>(R.id.tvReceiptDiscount)
         val tvReceiptTotalFare = dialogView.findViewById<TextView>(R.id.tvReceiptTotalFare)
         val tvReceiptTransportMode = dialogView.findViewById<TextView>(R.id.tvReceiptTransportMode)
+        val tvReceiptChange = dialogView.findViewById<TextView>(R.id.tvReceiptChange)
 
         tvReceiptOrigin.text = "Origin: $origin"
         tvReceiptDestination.text = "Destination: $destination"
@@ -207,6 +238,12 @@ class MainActivity : AppCompatActivity() {
         tvReceiptDiscount.text = "Discount: $discountType"
         tvReceiptTotalFare.text = "Total Fare: ₱${String.format("%.2f", discountedFare)}"
         tvReceiptTransportMode.text = "Transport Mode: $transportMode"
+
+        if (change != null) {
+            tvReceiptChange.text = "Change: ₱${String.format("%.2f", change)}"
+        } else {
+            tvReceiptChange.text = "Baba ka, noy. Kulang pletem"
+        }
 
         val btnCloseReceipt = dialogView.findViewById<Button>(R.id.btnCloseReceipt)
         btnCloseReceipt.setOnClickListener {
